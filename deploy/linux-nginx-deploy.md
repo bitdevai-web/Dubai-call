@@ -1,6 +1,23 @@
 # Linux Nginx Deployment
 
-Build the app locally or on the server:
+## Step 1: Create Environment Variables on Server
+
+**Critical:** Create `.env.local` on the server with your ElevenLabs credentials:
+
+```bash
+cd /path/to/dubai-call
+nano .env.local
+```
+
+Add these lines:
+```
+VITE_ELEVENLABS_API_KEY=sk_xxx_your_key_here
+VITE_ELEVENLABS_VOICE_ID=your_voice_id_here
+```
+
+Save and exit (Ctrl+X, Y, Enter).
+
+## Step 2: Build the app locally or on the server:
 
 ```bash
 npm install

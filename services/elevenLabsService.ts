@@ -4,8 +4,19 @@ const ELEVENLABS_VOICE_ID = import.meta.env.VITE_ELEVENLABS_VOICE_ID;
 let currentAudio: HTMLAudioElement | null = null;
 let currentObjectUrl: string | null = null;
 
+// Debug logging for environment variables
+if (typeof window !== 'undefined' && import.meta.env.DEV) {
+  console.log('[ElevenLabs] API Key configured:', Boolean(ELEVENLABS_API_KEY));
+  console.log('[ElevenLabs] Voice ID configured:', Boolean(ELEVENLABS_VOICE_ID));
+}
+
 export function hasElevenLabsConfig(): boolean {
-  return Boolean(ELEVENLABS_API_KEY);
+  const isConfigured = Boolean(ELEVENLABS_API_KEY && ELEVENLABS_VOICE_ID);
+  if (!isConfigured && typeof window !== 'undefined') {
+    console.warn('[ElevenLabs] API configuration missing. Using browser voice fallback.');
+    console.warn('[ElevenLabs] Ensure .env.local has VITE_ELEVENLABS_API_KEY and VITE_ELEVENLABS_VOICE_ID');
+  }
+  return isConfigured;
 }
 
 export function stopVoicePlayback() {
